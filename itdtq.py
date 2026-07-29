@@ -14,15 +14,15 @@ from googleapiclient.http import MediaFileUpload
 import segno
 
 # ==============================
-# تنظیمات اولیه
+# Initial Settings
 # ==============================
 SCOPES = ['https://www.googleapis.com/auth/drive']
-APP_NAME = "مدیریت‌کننده گوگل درایو"
+APP_NAME = "Google Drive Manager"
 VERSION = "2.3"
 CONFIG_FILE = "app_config.json"
 
 # ==============================
-# مدیریت تنظیمات
+# Settings Manager
 # ==============================
 class ConfigManager:
     @staticmethod
@@ -42,7 +42,7 @@ class ConfigManager:
             json.dump(config, f, indent=4, ensure_ascii=False)
 
 # ==============================
-# مدیریت تم (طراحی مدرن و مینیمال)
+# Theme Manager (Modern & Minimal Design)
 # ==============================
 class ThemeManager:
     DARK = {
@@ -89,7 +89,7 @@ class ThemeManager:
     def generate_stylesheet(name):
         c = ThemeManager.get_theme(name)
         return f"""
-            /* ===== پایه ===== */
+            /* ===== Base ===== */
             QMainWindow, QWidget {{
                 background-color: {c["bg"]};
                 color: {c["text"]};
@@ -97,7 +97,7 @@ class ThemeManager:
                 font-size: 13px;
             }}
             
-            /* ===== تب‌ها (بدون حاشیه و با انتقال نرم) ===== */
+            /* ===== Tabs (borderless, smooth transition) ===== */
             QTabWidget::pane {{
                 border: none;
                 background: transparent;
@@ -124,7 +124,7 @@ class ThemeManager:
                 border-radius: 8px 8px 0 0;
             }}
             
-            /* ===== ورودی‌ها ===== */
+            /* ===== Inputs ===== */
             QLineEdit, QTextEdit, QPlainTextEdit {{
                 background-color: {c["input_bg"]};
                 color: {c["text"]};
@@ -141,7 +141,7 @@ class ThemeManager:
                 color: {c["text_secondary"]};
             }}
             
-            /* ===== دکمه‌ها ===== */
+            /* ===== Buttons ===== */
             QPushButton {{
                 background-color: {c["primary"]};
                 color: white;
@@ -163,7 +163,7 @@ class ThemeManager:
                 color: {c["text_secondary"]};
             }}
             
-            /* ===== لیبل‌ها (بدون کادر، شفاف) ===== */
+            /* ===== Labels (borderless, transparent) ===== */
             QLabel {{
                 color: {c["text"]};
                 background: transparent;
@@ -187,7 +187,7 @@ class ThemeManager:
                 margin-bottom: 4px;
             }}
             
-            /* ===== نوار پیشرفت ===== */
+            /* ===== Progress Bar ===== */
             QProgressBar {{
                 border: none;
                 border-radius: 12px;
@@ -204,7 +204,7 @@ class ThemeManager:
                 border-radius: 12px;
             }}
             
-            /* ===== اسکرول‌بار ===== */
+            /* ===== Scrollbar ===== */
             QScrollBar:vertical {{
                 background: transparent;
                 width: 6px;
@@ -222,7 +222,7 @@ class ThemeManager:
                 height: 0;
             }}
             
-            /* ===== کامبوباکس ===== */
+            /* ===== Combo Box ===== */
             QComboBox {{
                 background-color: {c["input_bg"]};
                 color: {c["text"]};
@@ -247,7 +247,7 @@ class ThemeManager:
                 selection-color: white;
             }}
             
-            /* ===== نتیجه (TextBox) ===== */
+            /* ===== Result (TextBox) ===== */
             QTextEdit[type="result"] {{
                 background-color: {c["surface"]};
                 border: 1px solid {c["border"]};
@@ -257,7 +257,7 @@ class ThemeManager:
                 min-height: 80px;
             }}
             
-            /* ===== دکمه تم ===== */
+            /* ===== Theme Button ===== */
             #themeToggleBtn {{
                 background: rgba(255,255,255,0.08);
                 border: 1px solid rgba(255,255,255,0.2);
@@ -273,7 +273,7 @@ class ThemeManager:
         """
 
 # ==============================
-# کلاس مدیریت درایو (بدون تغییر)
+# Drive Manager Class
 # ==============================
 class DriveManager:
     def __init__(self, credentials_path='credentials.json'):
@@ -322,7 +322,7 @@ class DriveManager:
             files = results.get('files', [])
             if files:
                 return files[0]['id'], None
-            return None, "فایل پیدا نشد"
+            return None, "File not found"
         except Exception as e:
             return None, str(e)
 
@@ -347,7 +347,7 @@ class DriveManager:
             return None, str(e)
 
 # ==============================
-# کارگر (QThread)
+# Worker (QThread)
 # ==============================
 class Worker(QThread):
     finished = Signal(object, str)
@@ -364,7 +364,7 @@ class Worker(QThread):
             self.finished.emit(None, str(e))
 
 # ==============================
-# پنجره اصلی (طراحی مدرن)
+# Main Window (Modern UI)
 # ==============================
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -377,7 +377,7 @@ class MainWindow(QMainWindow):
         self.setGeometry(100, 100, 1100, 780)
         self.setMinimumSize(950, 700)
         
-        # ===== هدر =====
+        # ===== Header =====
         header = QWidget()
         header.setFixedHeight(70)
         header.setStyleSheet("""
@@ -395,7 +395,7 @@ class MainWindow(QMainWindow):
         h_layout.addWidget(title)
         h_layout.addStretch()
         
-        status = QLabel("✅ متصل")
+        status = QLabel("✅ Connected")
         status.setStyleSheet("color: rgba(255,255,255,0.85); font-size: 13px;")
         h_layout.addWidget(status)
         h_layout.addSpacing(16)
@@ -407,7 +407,7 @@ class MainWindow(QMainWindow):
         self.theme_btn.clicked.connect(self.toggle_theme)
         h_layout.addWidget(self.theme_btn)
         
-        # ===== بخش مرکزی =====
+        # ===== Central area =====
         central = QWidget()
         self.setCentralWidget(central)
         main_layout = QVBoxLayout(central)
@@ -415,7 +415,7 @@ class MainWindow(QMainWindow):
         main_layout.setSpacing(0)
         main_layout.addWidget(header)
         
-        # تب‌ها
+        # Tabs
         self.tabs = QTabWidget()
         self.tabs.setStyleSheet("QTabWidget::pane { background: transparent; }")
         main_layout.addWidget(self.tabs)
@@ -426,104 +426,97 @@ class MainWindow(QMainWindow):
         self.tab_qr = QWidget()
         self.tab_logs = QWidget()
         
-        self.tabs.addTab(self.tab_upload, "📤 آپلود")
-        self.tabs.addTab(self.tab_folder, "📁 پوشه")
-        self.tabs.addTab(self.tab_link, "🔗 لینک عمومی")
+        self.tabs.addTab(self.tab_upload, "📤 Upload")
+        self.tabs.addTab(self.tab_folder, "📁 Folder")
+        self.tabs.addTab(self.tab_link, "🔗 Public Link")
         self.tabs.addTab(self.tab_qr, "📱 QR Code")
-        self.tabs.addTab(self.tab_logs, "📋 لاگ")
+        self.tabs.addTab(self.tab_logs, "📋 Log")
         
-        # اعمال تم
+        # Apply theme
         self.apply_theme(self.current_theme)
         
-        # ساخت تب‌ها
+        # Setup tab contents
         self.setup_upload_tab()
         self.setup_folder_tab()
         self.setup_link_tab()
         self.setup_qr_tab()
         self.setup_logs_tab()
         
-        self.add_log("✅ برنامه راه‌اندازی شد")
-        self.add_log(f"🎨 تم: {'تاریک' if self.current_theme == 'dark' else 'روشن'}")
+        self.add_log("✅ Application started")
+        self.add_log(f"🎨 Theme: {'Dark' if self.current_theme == 'dark' else 'Light'}")
     
     # ==============================
-    # مدیریت تم
+    # Theme management
     # ==============================
     def apply_theme(self, name):
         self.current_theme = name
         self.setStyleSheet(ThemeManager.generate_stylesheet(name))
         if hasattr(self, 'theme_btn'):
             self.theme_btn.setText("☀️" if name == "dark" else "🌙")
-            self.theme_btn.setToolTip("تغییر به تم روشن" if name == "dark" else "تغییر به تم تاریک")
+            self.theme_btn.setToolTip("Switch to Light Theme" if name == "dark" else "Switch to Dark Theme")
         self.config["theme"] = name
         ConfigManager.save(self.config)
     
     def toggle_theme(self):
         new = "light" if self.current_theme == "dark" else "dark"
         self.apply_theme(new)
-        self.add_log(f"🎨 تغییر تم به: {'روشن' if new == 'light' else 'تاریک'}")
+        self.add_log(f"🎨 Theme changed to: {'Light' if new == 'light' else 'Dark'}")
     
     # ==============================
-    # تب آپلود (بدون کارت اضافی)
+    # Upload Tab
     # ==============================
     def setup_upload_tab(self):
         layout = QVBoxLayout(self.tab_upload)
         layout.setContentsMargins(40, 30, 40, 30)
         layout.setSpacing(20)
         
-        # عنوان و زیرعنوان
-        title = QLabel("📤 آپلود فایل")
+        title = QLabel("📤 File Upload")
         title.setProperty("type", "title")
         layout.addWidget(title)
         
-        sub = QLabel("فایل خود را انتخاب کنید و در پوشه‌ی مورد نظر آپلود نمایید.")
+        sub = QLabel("Select your file and upload it to the desired folder.")
         sub.setProperty("type", "subtitle")
         layout.addWidget(sub)
         
-        # انتخاب فایل
-        lbl = QLabel("مسیر فایل:")
+        lbl = QLabel("File Path:")
         lbl.setProperty("type", "label")
         layout.addWidget(lbl)
         
         file_row = QHBoxLayout()
         self.file_path_edit = QLineEdit()
-        self.file_path_edit.setPlaceholderText("مسیر فایل را انتخاب کنید...")
+        self.file_path_edit.setPlaceholderText("Select file path...")
         file_row.addWidget(self.file_path_edit)
         
-        browse_btn = QPushButton("📂 مرور")
+        browse_btn = QPushButton("📂 Browse")
         browse_btn.setFixedWidth(100)
         browse_btn.clicked.connect(self.browse_file)
         file_row.addWidget(browse_btn)
         layout.addLayout(file_row)
         
-        # پوشه مقصد
-        lbl2 = QLabel("آیدی یا لینک پوشه (اختیاری):")
+        lbl2 = QLabel("Folder ID or Link (optional):")
         lbl2.setProperty("type", "label")
         layout.addWidget(lbl2)
         self.folder_id_edit = QLineEdit()
-        self.folder_id_edit.setPlaceholderText("لینک یا آیدی پوشه (برای روت خالی بگذارید)")
+        self.folder_id_edit.setPlaceholderText("Folder link or ID (leave empty for root)")
         layout.addWidget(self.folder_id_edit)
         
-        # نام فایل در درایو
-        lbl3 = QLabel("نام فایل در درایو:")
+        lbl3 = QLabel("File Name on Drive:")
         lbl3.setProperty("type", "label")
         layout.addWidget(lbl3)
         self.file_name_edit = QLineEdit()
-        self.file_name_edit.setPlaceholderText("نام دلخواه (پیش‌فرض: نام اصلی)")
+        self.file_name_edit.setPlaceholderText("Custom name (default: original name)")
         layout.addWidget(self.file_name_edit)
         
-        # دکمه آپلود
-        self.upload_btn = QPushButton("🚀 آپلود فایل")
+        self.upload_btn = QPushButton("🚀 Upload File")
         self.upload_btn.setFixedHeight(48)
         self.upload_btn.clicked.connect(self.start_upload)
         layout.addWidget(self.upload_btn)
         
-        # نوار پیشرفت
         self.upload_progress = QProgressBar()
         self.upload_progress.setValue(0)
         self.upload_progress.setVisible(False)
         layout.addWidget(self.upload_progress)
         
-        # نتیجه
         self.upload_result = QTextEdit()
         self.upload_result.setProperty("type", "result")
         self.upload_result.setReadOnly(True)
@@ -533,7 +526,7 @@ class MainWindow(QMainWindow):
         layout.addStretch()
     
     def browse_file(self):
-        path, _ = QFileDialog.getOpenFileName(self, "انتخاب فایل")
+        path, _ = QFileDialog.getOpenFileName(self, "Select File")
         if path:
             self.file_path_edit.setText(path)
             if not self.file_name_edit.text():
@@ -542,7 +535,7 @@ class MainWindow(QMainWindow):
     def start_upload(self):
         path = self.file_path_edit.text().strip()
         if not path or not os.path.exists(path):
-            self.upload_result.setHtml("<span style='color:#F85149;'>❌ لطفاً یک فایل معتبر انتخاب کنید.</span>")
+            self.upload_result.setHtml("<span style='color:#F85149;'>❌ Please select a valid file.</span>")
             return
         
         folder_input = self.folder_id_edit.text().strip()
@@ -554,7 +547,7 @@ class MainWindow(QMainWindow):
         self.upload_btn.setEnabled(False)
         self.upload_progress.setVisible(True)
         self.upload_progress.setValue(10)
-        self.upload_result.setHtml("<span style='color:#D29922;'>⏳ در حال آپلود...</span>")
+        self.upload_result.setHtml("<span style='color:#D29922;'>⏳ Uploading...</span>")
         
         def task():
             return self.drive.upload_file(path, fname, folder_id)
@@ -564,44 +557,44 @@ class MainWindow(QMainWindow):
         self.upload_btn.setEnabled(True)
         self.upload_progress.setValue(100)
         if error:
-            self.upload_result.setHtml(f"<span style='color:#F85149;'>❌ خطا: {error}</span>")
+            self.upload_result.setHtml(f"<span style='color:#F85149;'>❌ Error: {error}</span>")
             return
         file_id = result[0] if isinstance(result, tuple) else result
         if not file_id:
-            self.upload_result.setHtml("<span style='color:#F85149;'>❌ آیدی فایل دریافت نشد.</span>")
+            self.upload_result.setHtml("<span style='color:#F85149;'>❌ File ID not received.</span>")
             return
         link = self.drive.get_public_link(file_id)
         self.upload_result.setHtml(
-            f"<span style='color:#2EA043;'>✅ فایل با موفقیت آپلود شد!</span><br>"
-            f"🆔 آیدی: {file_id}<br>"
-            f"🔗 لینک: <a href='{link}' style='color:#58A6FF;'>{link}</a>"
+            f"<span style='color:#2EA043;'>✅ File uploaded successfully!</span><br>"
+            f"🆔 ID: {file_id}<br>"
+            f"🔗 Link: <a href='{link}' style='color:#58A6FF;'>{link}</a>"
         )
-        self.add_log(f"فایل آپلود شد: {file_id}")
+        self.add_log(f"File uploaded: {file_id}")
     
     # ==============================
-    # تب پوشه (مشابه)
+    # Folder Tab
     # ==============================
     def setup_folder_tab(self):
         layout = QVBoxLayout(self.tab_folder)
         layout.setContentsMargins(40, 30, 40, 30)
         layout.setSpacing(18)
         
-        title = QLabel("📁 ایجاد پوشه جدید")
+        title = QLabel("📁 Create New Folder")
         title.setProperty("type", "title")
         layout.addWidget(title)
         
-        sub = QLabel("یک پوشه جدید در گوگل درایو خود ایجاد کنید.")
+        sub = QLabel("Create a new folder in your Google Drive.")
         sub.setProperty("type", "subtitle")
         layout.addWidget(sub)
         
-        lbl = QLabel("نام پوشه:")
+        lbl = QLabel("Folder Name:")
         lbl.setProperty("type", "label")
         layout.addWidget(lbl)
         self.folder_name_edit = QLineEdit()
-        self.folder_name_edit.setPlaceholderText("نام پوشه را وارد کنید...")
+        self.folder_name_edit.setPlaceholderText("Enter folder name...")
         layout.addWidget(self.folder_name_edit)
         
-        self.folder_btn = QPushButton("➕ ایجاد پوشه")
+        self.folder_btn = QPushButton("➕ Create Folder")
         self.folder_btn.setFixedHeight(48)
         self.folder_btn.clicked.connect(self.start_create_folder)
         layout.addWidget(self.folder_btn)
@@ -616,10 +609,10 @@ class MainWindow(QMainWindow):
     def start_create_folder(self):
         name = self.folder_name_edit.text().strip()
         if not name:
-            self.folder_result.setHtml("<span style='color:#F85149;'>❌ لطفاً نام پوشه را وارد کنید.</span>")
+            self.folder_result.setHtml("<span style='color:#F85149;'>❌ Please enter a folder name.</span>")
             return
         self.folder_btn.setEnabled(False)
-        self.folder_result.setHtml("<span style='color:#D29922;'>⏳ در حال ساخت...</span>")
+        self.folder_result.setHtml("<span style='color:#D29922;'>⏳ Creating...</span>")
         def task():
             return self.drive.create_folder(name)
         self.run_worker(task, self.on_folder_created)
@@ -627,50 +620,50 @@ class MainWindow(QMainWindow):
     def on_folder_created(self, result, error):
         self.folder_btn.setEnabled(True)
         if error:
-            self.folder_result.setHtml(f"<span style='color:#F85149;'>❌ خطا: {error}</span>")
+            self.folder_result.setHtml(f"<span style='color:#F85149;'>❌ Error: {error}</span>")
             return
         folder_id = result[0] if isinstance(result, tuple) else result
         if not folder_id:
-            self.folder_result.setHtml("<span style='color:#F85149;'>❌ آیدی پوشه دریافت نشد.</span>")
+            self.folder_result.setHtml("<span style='color:#F85149;'>❌ Folder ID not received.</span>")
             return
         link = f"https://drive.google.com/drive/folders/{folder_id}"
         self.folder_result.setHtml(
-            f"<span style='color:#2EA043;'>✅ پوشه ساخته شد!</span><br>"
-            f"🆔 آیدی: {folder_id}<br>"
-            f"🔗 لینک: <a href='{link}' style='color:#58A6FF;'>{link}</a>"
+            f"<span style='color:#2EA043;'>✅ Folder created!</span><br>"
+            f"🆔 ID: {folder_id}<br>"
+            f"🔗 Link: <a href='{link}' style='color:#58A6FF;'>{link}</a>"
         )
-        self.add_log(f"پوشه ساخته شد: {folder_id}")
+        self.add_log(f"Folder created: {folder_id}")
     
     # ==============================
-    # تب لینک عمومی
+    # Public Link Tab
     # ==============================
     def setup_link_tab(self):
         layout = QVBoxLayout(self.tab_link)
         layout.setContentsMargins(40, 30, 40, 30)
         layout.setSpacing(18)
         
-        title = QLabel("🔗 دریافت لینک عمومی")
+        title = QLabel("🔗 Get Public Link")
         title.setProperty("type", "title")
         layout.addWidget(title)
-        sub = QLabel("لینک قابل اشتراک‌گذاری برای هر فایل در درایو خود دریافت کنید.")
+        sub = QLabel("Get a shareable link for any file in your Drive.")
         sub.setProperty("type", "subtitle")
         layout.addWidget(sub)
         
-        lbl1 = QLabel("آیدی یا لینک پوشه:")
+        lbl1 = QLabel("Folder ID or Link:")
         lbl1.setProperty("type", "label")
         layout.addWidget(lbl1)
         self.link_folder_edit = QLineEdit()
-        self.link_folder_edit.setPlaceholderText("لینک یا آیدی پوشه را وارد کنید...")
+        self.link_folder_edit.setPlaceholderText("Enter folder link or ID...")
         layout.addWidget(self.link_folder_edit)
         
-        lbl2 = QLabel("نام دقیق فایل:")
+        lbl2 = QLabel("Exact File Name:")
         lbl2.setProperty("type", "label")
         layout.addWidget(lbl2)
         self.link_file_edit = QLineEdit()
-        self.link_file_edit.setPlaceholderText("نام فایل را دقیقاً وارد کنید...")
+        self.link_file_edit.setPlaceholderText("Enter file name exactly...")
         layout.addWidget(self.link_file_edit)
         
-        self.link_btn = QPushButton("🔗 دریافت لینک عمومی")
+        self.link_btn = QPushButton("🔗 Get Public Link")
         self.link_btn.setFixedHeight(48)
         self.link_btn.clicked.connect(self.start_get_link)
         layout.addWidget(self.link_btn)
@@ -686,14 +679,14 @@ class MainWindow(QMainWindow):
         folder_input = self.link_folder_edit.text().strip()
         fname = self.link_file_edit.text().strip()
         if not folder_input or not fname:
-            self.link_result.setHtml("<span style='color:#F85149;'>❌ لطفاً تمام فیلدها را پر کنید.</span>")
+            self.link_result.setHtml("<span style='color:#F85149;'>❌ Please fill in all fields.</span>")
             return
         folder_id = self.clean_folder_id(folder_input)
         if not folder_id:
-            self.link_result.setHtml("<span style='color:#F85149;'>❌ آیدی پوشه نامعتبر است.</span>")
+            self.link_result.setHtml("<span style='color:#F85149;'>❌ Invalid folder ID.</span>")
             return
         self.link_btn.setEnabled(False)
-        self.link_result.setHtml("<span style='color:#D29922;'>⏳ در حال جستجو...</span>")
+        self.link_result.setHtml("<span style='color:#D29922;'>⏳ Searching...</span>")
         def task1():
             return self.drive.search_file(folder_id, fname)
         self.run_worker(task1, self.on_file_found)
@@ -701,12 +694,12 @@ class MainWindow(QMainWindow):
     def on_file_found(self, result, error):
         if error or not result:
             self.link_btn.setEnabled(True)
-            self.link_result.setHtml(f"<span style='color:#F85149;'>❌ فایل پیدا نشد: {error}</span>")
+            self.link_result.setHtml(f"<span style='color:#F85149;'>❌ File not found: {error}</span>")
             return
         file_id = result[0] if isinstance(result, tuple) else result
         if not file_id:
             self.link_btn.setEnabled(True)
-            self.link_result.setHtml("<span style='color:#F85149;'>❌ آیدی فایل نامعتبر.</span>")
+            self.link_result.setHtml("<span style='color:#F85149;'>❌ Invalid file ID.</span>")
             return
         def task2():
             success, err = self.drive.make_public(file_id)
@@ -718,53 +711,53 @@ class MainWindow(QMainWindow):
     def on_link_ready(self, result, error):
         self.link_btn.setEnabled(True)
         if error:
-            self.link_result.setHtml(f"<span style='color:#F85149;'>❌ خطا: {error}</span>")
+            self.link_result.setHtml(f"<span style='color:#F85149;'>❌ Error: {error}</span>")
             return
         link = result[0] if isinstance(result, tuple) else result
         if not link:
-            self.link_result.setHtml("<span style='color:#F85149;'>❌ لینک دریافت نشد.</span>")
+            self.link_result.setHtml("<span style='color:#F85149;'>❌ Link not received.</span>")
             return
-        self.link_result.setHtml(f"<span style='color:#2EA043;'>✅ لینک عمومی:</span><br>🔗 <a href='{link}' style='color:#58A6FF;'>{link}</a>")
-        self.add_log(f"لینک عمومی: {link}")
+        self.link_result.setHtml(f"<span style='color:#2EA043;'>✅ Public link:</span><br>🔗 <a href='{link}' style='color:#58A6FF;'>{link}</a>")
+        self.add_log(f"Public link: {link}")
     
     # ==============================
-    # تب QR Code
+    # QR Code Tab
     # ==============================
     def setup_qr_tab(self):
         layout = QVBoxLayout(self.tab_qr)
         layout.setContentsMargins(40, 30, 40, 30)
         layout.setSpacing(18)
         
-        title = QLabel("📱 ساخت QR Code")
+        title = QLabel("📱 Generate QR Code")
         title.setProperty("type", "title")
         layout.addWidget(title)
-        sub = QLabel("هر لینکی را به یک QR Code با کیفیت چاپ تبدیل کنید.")
+        sub = QLabel("Convert any link into a high-quality printable QR Code.")
         sub.setProperty("type", "subtitle")
         layout.addWidget(sub)
         
-        lbl1 = QLabel("لینک مورد نظر:")
+        lbl1 = QLabel("Link:")
         lbl1.setProperty("type", "label")
         layout.addWidget(lbl1)
         self.qr_link_edit = QLineEdit()
-        self.qr_link_edit.setPlaceholderText("لینک را وارد کنید...")
+        self.qr_link_edit.setPlaceholderText("Enter link...")
         layout.addWidget(self.qr_link_edit)
         
-        lbl2 = QLabel("نام فایل خروجی:")
+        lbl2 = QLabel("Output File Name:")
         lbl2.setProperty("type", "label")
         layout.addWidget(lbl2)
         self.qr_name_edit = QLineEdit()
-        self.qr_name_edit.setPlaceholderText("نام دلخواه (بدون پسوند)")
+        self.qr_name_edit.setPlaceholderText("Custom name (without extension)")
         layout.addWidget(self.qr_name_edit)
         
-        lbl3 = QLabel("کیفیت (scale) - پیشنهاد ۳۰:")
+        lbl3 = QLabel("Quality (scale) - suggested 30:")
         lbl3.setProperty("type", "label")
         layout.addWidget(lbl3)
         self.qr_scale_edit = QLineEdit()
-        self.qr_scale_edit.setPlaceholderText("عدد 10 تا 50")
+        self.qr_scale_edit.setPlaceholderText("Number 10 to 50")
         self.qr_scale_edit.setText("30")
         layout.addWidget(self.qr_scale_edit)
         
-        self.qr_btn = QPushButton("📱 ساخت QR Code")
+        self.qr_btn = QPushButton("📱 Generate QR Code")
         self.qr_btn.setFixedHeight(48)
         self.qr_btn.clicked.connect(self.start_generate_qr)
         layout.addWidget(self.qr_btn)
@@ -781,7 +774,7 @@ class MainWindow(QMainWindow):
         name = self.qr_name_edit.text().strip()
         scale_text = self.qr_scale_edit.text().strip()
         if not link:
-            self.qr_result.setHtml("<span style='color:#F85149;'>❌ لطفاً لینک را وارد کنید.</span>")
+            self.qr_result.setHtml("<span style='color:#F85149;'>❌ Please enter a link.</span>")
             return
         if not name:
             name = f"qrcode_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
@@ -790,7 +783,7 @@ class MainWindow(QMainWindow):
         except:
             scale = 30
         self.qr_btn.setEnabled(False)
-        self.qr_result.setHtml("<span style='color:#D29922;'>⏳ در حال ساخت...</span>")
+        self.qr_result.setHtml("<span style='color:#D29922;'>⏳ Generating...</span>")
         def task():
             return self.drive.generate_qr(link, name, scale)
         self.run_worker(task, self.on_qr_generated)
@@ -798,24 +791,24 @@ class MainWindow(QMainWindow):
     def on_qr_generated(self, result, error):
         self.qr_btn.setEnabled(True)
         if error:
-            self.qr_result.setHtml(f"<span style='color:#F85149;'>❌ خطا: {error}</span>")
+            self.qr_result.setHtml(f"<span style='color:#F85149;'>❌ Error: {error}</span>")
             return
         path = result[0] if isinstance(result, tuple) else result
         if not path:
-            self.qr_result.setHtml("<span style='color:#F85149;'>❌ مسیر فایل دریافت نشد.</span>")
+            self.qr_result.setHtml("<span style='color:#F85149;'>❌ File path not received.</span>")
             return
-        self.qr_result.setHtml(f"<span style='color:#2EA043;'>✅ QR Code ساخته شد!</span><br>📁 مسیر: {path}")
-        self.add_log(f"QR ساخته شد: {path}")
+        self.qr_result.setHtml(f"<span style='color:#2EA043;'>✅ QR Code generated!</span><br>📁 Path: {path}")
+        self.add_log(f"QR generated: {path}")
     
     # ==============================
-    # تب لاگ
+    # Log Tab
     # ==============================
     def setup_logs_tab(self):
         layout = QVBoxLayout(self.tab_logs)
         layout.setContentsMargins(40, 30, 40, 30)
         layout.setSpacing(18)
         
-        title = QLabel("📋 گزارش عملیات")
+        title = QLabel("📋 Operation Logs")
         title.setProperty("type", "title")
         layout.addWidget(title)
         
@@ -824,20 +817,20 @@ class MainWindow(QMainWindow):
         self.log_text.setFont(QFont("Consolas", 11))
         layout.addWidget(self.log_text)
         
-        clear_btn = QPushButton("🗑️ پاک کردن لاگ")
+        clear_btn = QPushButton("🗑️ Clear Logs")
         clear_btn.setFixedHeight(40)
         clear_btn.clicked.connect(self.clear_logs)
         layout.addWidget(clear_btn)
     
     def clear_logs(self):
         self.log_text.clear()
-        self.add_log("🗑️ لاگ پاک شد")
+        self.add_log("🗑️ Logs cleared")
     
     def add_log(self, msg):
         self.log_text.append(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}")
     
     # ==============================
-    # ابزارهای کمکی
+    # Helpers
     # ==============================
     def clean_folder_id(self, text):
         if not text:
@@ -855,7 +848,7 @@ class MainWindow(QMainWindow):
         self.worker.start()
 
 # ==============================
-# اجرا
+# Run
 # ==============================
 if __name__ == "__main__":
     app = QApplication(sys.argv)
