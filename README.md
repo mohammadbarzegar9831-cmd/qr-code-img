@@ -2,7 +2,7 @@
 
 A modern, sleek desktop application for managing Google Drive files with a beautiful PySide6 GUI. Upload files, create folders, generate public links, and create QR codes—all in one place with dark/light themes.
 
-![App Screenshot](https://drive.google.com/file/d/13jYgCO0Jkii8od1sr2mJ-9UwxW6fMOvl/view)
+![App Screenshot](screenshots/app-screenshot.png)
 
 ---
 
