@@ -1,53 +1,53 @@
-# 🚀 مدیریت‌کننده گوگل درایو (Google Drive Manager)
+# 🚀 Google Drive Manager
 
-یک اپلیکیشن دسکتاپ مدرن و قدرتمند برای مدیریت گوگل درایو با رابط کاربری PySide6. آپلود فایل، ایجاد پوشه، تولید لینک اشتراک‌گذاری و ساخت QR Code—همه در یک برنامه‌ی زیبا با تم تاریک/روشن.
+A modern, sleek desktop application for managing Google Drive files with a beautiful PySide6 GUI. Upload files, create folders, generate public links, and create QR codes—all in one place with dark/light themes.
 
-![نمایش برنامه](https://via.placeholder.com/800x450?text=Google+Drive+Manager+Screenshot)
-
----
-
-## ✨ ویژگی‌ها
-
-- **📤 آپلود فایل** – آپلود هر فایلی به گوگل درایو با امکان انتخاب پوشه مقصد
-- **📁 ایجاد پوشه** – ساخت پوشه‌های جدید در درایو
-- **🔗 تولید لینک عمومی** – جستجوی فایل و دریافت لینک قابل اشتراک‌گذاری
-- **📱 ساخت QR Code** – تبدیل هر لینکی (از جمله لینک‌های درایو) به تصویر QR Code قابل دانلود
-- **🎨 تم مدرن** – تغییر بین تم **تاریک** و **روشن** با یک کلیک
-- **📋 لاگ عملیات** – نمایش لحظه‌ای تمام عملیات انجام‌شده
-- **⚡ پردازش غیرهمزمان** – استفاده از threading برای حفظ پاسخ‌گویی رابط کاربری
+![App Screenshot](https://via.placeholder.com/800x450?text=Google+Drive+Manager+Screenshot)
 
 ---
 
-## 📸 تصاویر
+## ✨ Features
 
-_(به‌زودی اضافه می‌شود)_
-
----
-
-## 🛠️ نصب و راه‌اندازی
-
-### پیش‌نیازها
-
-- Python 3.8 یا بالاتر
-- یک پروژه در [Google Cloud Console](https://console.cloud.google.com/) با فعال بودن **Drive API**
-- فایل اعتبارسنجی OAuth 2.0 (`credentials.json`)
+- **📤 Upload Files** – Upload any file to Google Drive with optional folder selection
+- **📁 Create Folders** – Create new folders directly in your Drive
+- **🔗 Public Link Generator** – Search for a file and get a shareable public link
+- **📱 QR Code Generator** – Convert any link (including Drive links) to a downloadable QR code image
+- **🎨 Modern Themes** – Switch between **Dark** and **Light** themes with one click
+- **📋 Activity Log** – Real‑time log of all operations
+- **⚡ Non‑blocking UI** – Background threading keeps the interface responsive
 
 ---
 
-### مرحله ۱: فعال‌سازی Google Drive API
+## 📸 Screenshots
 
-1. به [Google Cloud Console](https://console.cloud.google.com/) بروید.
-2. یک پروژه جدید بسازید (یا پروژه‌ی موجود را انتخاب کنید).
-3. به **APIs & Services > Library** بروید و **Google Drive API** را فعال کنید.
-4. در بخش **Credentials**، یک **OAuth 2.0 Client ID** از نوع **Desktop application** بسازید.
-5. فایل JSON را دانلود کرده و نام آن را به `credentials.json` تغییر دهید.
-6. این فایل را در همان پوشه‌ی برنامه قرار دهید.
+_(Coming soon)_
 
 ---
 
-### مرحله ۲: نصب وابستگی‌ها
+## 🛠️ Installation & Setup
 
-مخزن را کلون کرده و وابستگی‌ها را نصب کنید:
+### Prerequisites
+
+- Python 3.8 or higher
+- A project in [Google Cloud Console](https://console.cloud.google.com/) with **Drive API** enabled
+- OAuth 2.0 credentials file (`credentials.json`)
+
+---
+
+### Step 1: Enable Google Drive API
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/).
+2. Create a new project (or select an existing one).
+3. Navigate to **APIs & Services > Library** and enable **Google Drive API**.
+4. In the **Credentials** section, create an **OAuth 2.0 Client ID** of type **Desktop application**.
+5. Download the JSON file and rename it to `credentials.json`.
+6. Place this file in the root folder of the application.
+
+---
+
+### Step 2: Install Dependencies
+
+Clone the repository and install the required packages:
 
 ```bash
 git clone https://github.com/mohammadbarzegar9831-cmd/qr-code-img.git
@@ -57,91 +57,91 @@ pip install -r requirements.txt
 
 ---
 
-### مرحله ۳: اجرای برنامه
+### Step 3: Run the Application
 
 ```bash
 python itdtq.py
 ```
 
-> **نکته:** در اولین اجرا، مرورگر باز می‌شود و از شما می‌خواهد به حساب گوگل خود وارد شوید. پس از تأیید، توکن در `token.pickle` ذخیره می‌شود و دفعات بعد نیازی به ورود مجدد ندارید.
+> **Note:** On first run, your browser will open and ask you to log in to your Google account. After authorization, the token is saved in `token.pickle` so you won't need to log in again next time.
 
 ---
 
-## 🧭 راهنمای استفاده
+## 🧭 How to Use
 
-### تب آپلود (`📤 آپلود`)
-- **مسیر فایل**: فایل موردنظر را از سیستم انتخاب کنید.
-- **آیدی یا لینک پوشه** (اختیاری): اگر خالی بگذارید، فایل در ریشه‌ی درایو آپلود می‌شود.
-- **نام فایل در درایو**: نامی که در گوگل‌درایو نمایش داده می‌شود (پیش‌فرض: نام اصلی فایل).
+### Upload Tab (`📤 Upload`)
+- **File Path**: Select the file from your system.
+- **Folder ID or Link** (optional): If left blank, the file will be uploaded to the root of your Drive.
+- **File Name in Drive**: The name that will appear in Google Drive (defaults to the original file name).
 
-### تب پوشه (`📁 پوشه`)
-- نام پوشه‌ی جدید را وارد کرده و دکمه‌ی **ایجاد پوشه** را بزنید. آیدی و لینک پوشه پس از ایجاد نمایش داده می‌شود.
+### Folder Tab (`📁 Folder`)
+- Enter the desired folder name and click **Create Folder**. The folder ID and link will be displayed upon success.
 
-### تب لینک عمومی (`🔗 لینک عمومی`)
-- **آیدی یا لینک پوشه**: پوشه‌ای که فایل در آن قرار دارد.
-- **نام دقیق فایل**: نام فایل را به‌طور کامل وارد کنید (حساس به بزرگ/کوچکی بودن حروف).
-- پس از یافتن فایل، به‌صورت خودکار دسترسی عمومی (`anyone with link can view`) فعال شده و لینک نمایش داده می‌شود.
+### Public Link Tab (`🔗 Public Link`)
+- **Folder ID or Link**: The folder where your file resides.
+- **Exact File Name**: Enter the file name exactly (case‑sensitive).
+- Once the file is found, public access (`anyone with link can view`) is automatically enabled and the shareable link is shown.
 
-### تب QR Code (`📱 QR Code`)
-- **لینک مورد نظر**: هر لینکی (مثلاً لینک فایل یا پوشه).
-- **نام فایل خروجی**: نام تصویر PNG ذخیره‌شده (بدون پسوند).
-- **کیفیت (scale)**: عددی بین ۱۰ تا ۵۰ (پیش‌فرض: ۳۰) که هرچه بیشتر، وضوح بالاتر.
-- تصویر QR در همان مسیر برنامه ذخیره می‌شود.
+### QR Code Tab (`📱 QR Code`)
+- **Target Link**: Any link (e.g., a file or folder link).
+- **Output File Name**: Desired name for the PNG image (without extension).
+- **Scale (quality)**: A number between 10 and 50 (default: 30); higher values yield better resolution.
+- The QR code image will be saved in the application directory.
 
-### تب لاگ (`📋 لاگ`)
-- تمام عملیات (آپلود، ساخت پوشه، دریافت لینک، تغییر تم و ...) را به همراه زمان ثبت می‌کند.
-- می‌توانید با دکمه‌ی **پاک کردن لاگ** آن را خالی کنید.
-
----
-
-## 🎨 تغییر تم
-
-در سمت راست هدر، دکمه‌ی **🌙/☀️** قرار دارد. با کلیک روی آن، بین تم تاریک و روشن جابه‌جا می‌شوید. تنظیمات تم در فایل `app_config.json` ذخیره می‌شود.
+### Log Tab (`📋 Log`)
+- Every operation (upload, folder creation, link generation, theme change, etc.) is logged with timestamps.
+- Use the **Clear Log** button to empty the log.
 
 ---
 
-## 📁 ساختار فایل‌ها
+## 🎨 Changing the Theme
 
-| فایل | توضیح |
-|------|-------|
-| `itdtq.py` | کد اصلی برنامه |
-| `requirements.txt` | لیست کتابخانه‌های مورد نیاز |
-| `app_config.json` | تنظیمات کاربر (تم فعلی) |
-| `credentials.json` | **(محرمانه)** اطلاعات OAuth از گوگل – هرگز عمومی نشود |
-| `token.pickle` | **(محرمانه)** توکن احراز هویت – هرگز عمومی نشود |
+In the top‑right corner of the header, you'll find the **🌙/☀️** button. Click it to toggle between dark and light themes. The theme preference is saved in `app_config.json`.
 
 ---
 
-## ⚙️ وابستگی‌ها
+## 📁 File Structure
 
-- [PySide6](https://pypi.org/project/PySide6/) – رابط کاربری
-- [google-auth-oauthlib](https://pypi.org/project/google-auth-oauthlib/) – احراز هویت گوگل
-- [google-api-python-client](https://pypi.org/project/google-api-python-client/) – ارتباط با Drive API
-- [segno](https://pypi.org/project/segno/) – تولید QR Code
-
----
-
-## 🤝 مشارکت
-
-اگر ایده یا پیشنهادی دارید، خوشحال می‌شویم که آن را با ما به اشتراک بگذارید.
-
-1. مخزن را **فورک** کنید
-2. یک **شاخه جدید** ایجاد کنید (`git checkout -b feature/your-feature`)
-3. تغییرات خود را **commit** کنید (`git commit -m 'Add some feature'`)
-4. **push** کنید (`git push origin feature/your-feature`)
-5. یک **Pull Request** باز کنید
+| File | Description |
+|------|-------------|
+| `itdtq.py` | Main application code |
+| `requirements.txt` | Python dependencies |
+| `app_config.json` | User settings (current theme) |
+| `credentials.json` | **(Sensitive)** OAuth credentials – **never commit** |
+| `token.pickle` | **(Sensitive)** Authentication token – **never commit** |
 
 ---
 
-## 📜 مجوز
+## ⚙️ Dependencies
 
-این پروژه تحت مجوز **MIT** منتشر شده است – برای جزئیات بیشتر به فایل `LICENSE` مراجعه کنید.
+- [PySide6](https://pypi.org/project/PySide6/) – GUI framework
+- [google-auth-oauthlib](https://pypi.org/project/google-auth-oauthlib/) – Google OAuth authentication
+- [google-api-python-client](https://pypi.org/project/google-api-python-client/) – Google Drive API client
+- [segno](https://pypi.org/project/segno/) – QR code generation
 
 ---
 
-## 📬 تماس
+## 🤝 Contributing
 
-اگر سوالی دارید، می‌توانید از طریق [ایجاد Issue](https://github.com/mohammadbarzegar9831-cmd/qr-code-img/issues) با ما در ارتباط باشید.
+We welcome contributions! Here's how you can help:
 
-**توسعه‌دهنده:** Mohammad Barzegar  
-**نسخه:** 2.3
+1. **Fork** the repository
+2. Create a new branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -m 'Add some feature'`)
+4. Push to the branch (`git push origin feature/your-feature`)
+5. Open a **Pull Request**
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 📬 Contact
+
+If you have any questions, please [open an issue](https://github.com/mohammadbarzegar9831-cmd/qr-code-img/issues).
+
+**Developer:** Mohammad Barzegar  
+**Version:** 2.3
