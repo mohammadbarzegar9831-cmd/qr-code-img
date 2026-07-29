@@ -20,7 +20,7 @@ A modern, sleek desktop application for managing Google Drive files with a beaut
 
 ## 📸 Screenshots
 
-_(Coming soon)_
+![Main Window](screenshots/app-screenshot.png)
 
 ---
 
@@ -104,11 +104,21 @@ In the top‑right corner of the header, you'll find the **🌙/☀️** button.
 
 | File | Description |
 |------|-------------|
-| `itdtq.py` | Main application code |
+| `app.py` | Main application code |
 | `requirements.txt` | Python dependencies |
 | `app_config.json` | User settings (current theme) |
+| `.gitignore` | Files and folders ignored by Git (includes `credentials.json` and `token.pickle`) |
 | `credentials.json` | **(Sensitive)** OAuth credentials – **never commit** |
 | `token.pickle` | **(Sensitive)** Authentication token – **never commit** |
+
+---
+
+## 🛠️ Built With
+
+- **Python 3.10+** – Core language
+- **PySide6** – GUI framework
+- **Google Drive API v3** – Cloud storage integration
+- **Segno** – QR code generation library
 
 ---
 
