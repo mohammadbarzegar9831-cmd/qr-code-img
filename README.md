@@ -60,7 +60,7 @@ pip install -r requirements.txt
 ### Step 3: Run the Application
 
 ```bash
-python itdtq.py
+python app.py
 ```
 
 > **Note:** On first run, your browser will open and ask you to log in to your Google account. After authorization, the token is saved in `token.pickle` so you won't need to log in again next time.
